@@ -3,8 +3,12 @@ import mongoose from "mongoose"
 import userRouter from "./routers/userRouter.js"
 import authorizedUser from "./lib/jwtMiddleware.js"
 import productRouter from "./routers/productRouter.js"
+import cors from "cors"
+import dotenv from "dotenv"
 
-const mongoURI = "mongodb+srv://admin:1234@cluster0.ctioibl.mongodb.net/?appName=Cluster0"
+dotenv.config()
+
+const mongoURI = process.env.MONGO_URI
 
 mongoose.connect(mongoURI).then(
     () => {
@@ -18,13 +22,14 @@ mongoose.connect(mongoURI).then(
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 app.use(authorizedUser)
 
 //Connect with Routers
-app.use("/users",userRouter)
-app.use("/products",productRouter)
+app.use("/api/users",userRouter)
+app.use("/api/products",productRouter)
 
 app.listen(3000,
     () => {
