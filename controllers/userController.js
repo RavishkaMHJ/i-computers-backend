@@ -82,7 +82,7 @@ export function loginUser(req,res) {
                             image : user.image,
                             isEmailVerified : user.isEmailVerified
 
-                        } , process.env.JWT_SECRET
+                        } , process.env.JWT_SECRET, {expiresIn: "48h"}
                     )
 
                     res.json ({
